@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
+import Link from "next/link";
 import { Rocket, Code, Smartphone, Sparkles, ArrowRight, LucideIcon } from "lucide-react";
 import { Service } from "@/types";
 import { fallbackServices } from "@/lib/data";
@@ -110,13 +111,17 @@ export const ServicesSection: React.FC = () => {
           {services.map((service, index) => {
             const Icon = iconMap[service.icon] || Rocket;
             const style = serviceBadgeStyles[index % serviceBadgeStyles.length];
+            const serviceSlug =
+              service._id ||
+              service.slug ||
+              service.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
             return (
               <motion.div
                 key={service._id || service.title}
                 variants={cardItemVariants}
                 whileHover={{ y: -6, transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] } }}
-                className="group p-6 rounded-2xl bg-[#13182C] border border-[#1E2540] hover:border-purple-500/50 hover:bg-[#181F38] transition-all duration-300 flex flex-col justify-between relative overflow-hidden shadow-glow-card hover:shadow-[0_12px_35px_-10px_rgba(168,85,247,0.35)] cursor-pointer"
+                className="group p-6 rounded-2xl bg-[#13182C] border border-[#1E2540] hover:border-pink-500/50 hover:bg-[#181F38] transition-all duration-300 flex flex-col justify-between relative overflow-hidden shadow-glow-card hover:shadow-[0_12px_35px_-10px_rgba(255,59,129,0.25)]"
               >
                 {/* Background glow on hover */}
                 <div
@@ -134,7 +139,9 @@ export const ServicesSection: React.FC = () => {
                   {/* Title & Description */}
                   <div>
                     <h3 className="text-base font-bold text-white mb-2 group-hover:text-pink-400 transition-colors">
-                      {service.title}
+                      <Link href={`/services/${serviceSlug}`}>
+                        {service.title}
+                      </Link>
                     </h3>
                     <p className="text-xs text-[#94A3B8] leading-relaxed font-normal">
                       {service.description}
@@ -142,15 +149,15 @@ export const ServicesSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Footer Link */}
+                {/* Footer Action Button */}
                 <div className="pt-6 mt-2 border-t border-transparent group-hover:border-white/[0.05] transition-colors">
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-300 group-hover:text-white transition-colors"
+                  <Link
+                    href={`/services/${serviceSlug}`}
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[0.04] hover:bg-pink-500/15 border border-white/[0.08] hover:border-pink-500/30 text-xs font-semibold text-gray-200 group-hover:text-white transition-all w-full justify-between cursor-pointer"
                   >
-                    <span>{service.linkText || "Learn More"}</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-pink-400 transition-transform group-hover:translate-x-1.5 duration-200" />
-                  </a>
+                    <span>{service.linkText || "View Packages"}</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-pink-400 transition-transform group-hover:translate-x-1 duration-200" />
+                  </Link>
                 </div>
               </motion.div>
             );

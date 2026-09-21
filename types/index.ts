@@ -30,6 +30,7 @@ export interface Project {
 
 export interface Service {
   _id?: string;
+  slug?: string;
   title: string;
   description: string;
   icon: string;

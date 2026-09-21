@@ -298,7 +298,32 @@ export default function AdminContentPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-            <div>
+            <div className="p-4 rounded-2xl bg-[#0B0F19] border-2 border-pink-500/30 shadow-[0_0_25px_rgba(255,59,129,0.1)]">
+              <div className="flex items-center justify-between mb-2">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-pink-500/20 text-pink-400 text-[10px] font-extrabold uppercase tracking-wider">
+                  <Sparkles className="w-3 h-3" />
+                  <span>Main Hero &amp; Base Profile Image</span>
+                </span>
+                {formData.hero.heroPortrait && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        hero: {
+                          ...formData.hero,
+                          heroPortrait:
+                            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+                        },
+                      })
+                    }
+                    className="text-[10px] text-gray-400 hover:text-rose-400 underline transition-colors cursor-pointer"
+                  >
+                    Reset Default
+                  </button>
+                )}
+              </div>
+
               <ImageUploader
                 label="Hero Portrait & Base Profile Image"
                 value={formData.hero.heroPortrait}
@@ -309,10 +334,10 @@ export default function AdminContentPage() {
                   })
                 }
                 folder="portfolio/hero"
-                aspectRatio="square"
+                aspectRatio="portrait"
               />
-              <p className="text-[11px] text-gray-500 mt-1.5">
-                This acts as the primary profile artwork across your Hero section, squircle frame, and site metadata.
+              <p className="text-[11px] text-gray-400 mt-2 leading-relaxed">
+                This image is the primary base artwork across your Hero section squircle frame, profile badges, and site metadata. Upload from your device or paste any image link.
               </p>
             </div>
 

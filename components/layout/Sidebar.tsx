@@ -134,21 +134,39 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection: propActive, onN
 
       {/* Sidebar Cards & Footer Info */}
       <div className="p-4 space-y-4 relative z-10">
-        {/* Available for Freelance Card */}
-        <div className="p-4 rounded-2xl bg-gradient-to-br from-[#401944] via-[#241740] to-[#13182C] border border-purple-500/30 shadow-glow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-pink-500/15 rounded-full blur-xl pointer-events-none" />
-          <h3 className="text-xs font-bold text-white mb-1.5 leading-snug">
+        {/* Available for Freelance & Animated Hire Me Card */}
+        <div className="p-4 sm:p-4.5 rounded-2xl bg-gradient-to-br from-[#401944]/90 via-[#201538]/90 to-[#101426] border border-pink-500/35 shadow-[0_8px_30px_rgba(255,59,129,0.2)] relative overflow-hidden group">
+          {/* Ambient Glows */}
+          <div className="absolute -top-10 -right-10 w-28 h-28 bg-pink-500/25 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
+          <div className="absolute -bottom-10 -left-10 w-28 h-28 bg-cyan-500/20 rounded-full blur-2xl pointer-events-none" />
+
+          {/* Live Status Badge */}
+          <div className="flex items-center gap-2 mb-2.5">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400">
+              Open for Projects
+            </span>
+          </div>
+
+          <h3 className="text-xs sm:text-sm font-bold text-white mb-1.5 leading-snug">
             Available for Brand Projects
           </h3>
-          <p className="text-[11px] text-[#CBD5E1] mb-3 leading-relaxed">
-            Let&apos;s build an iconic brand together!
+          <p className="text-[11px] text-gray-300 mb-3.5 leading-relaxed font-normal">
+            Let&apos;s build an iconic brand system together!
           </p>
+
+          {/* Larger Animated Hire Me Button */}
           <a
             href="#contact"
-            className="inline-flex items-center justify-between w-full px-3.5 py-2 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-[#FF3B81] via-[#EC4899] to-[#A855F7] hover:opacity-95 transition-all shadow-sm group-hover:shadow-glow-pink"
+            className="relative overflow-hidden inline-flex items-center justify-between w-full px-4 py-3 rounded-xl text-xs sm:text-[13px] font-extrabold text-white bg-gradient-to-r from-[#FF3B81] via-[#EC4899] to-[#A855F7] shadow-[0_4px_20px_rgba(255,59,129,0.4)] hover:shadow-[0_6px_28px_rgba(255,59,129,0.65)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group/btn cursor-pointer"
           >
-            <span>Hire Me</span>
-            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+            {/* Shimmer sweep */}
+            <span className="absolute inset-0 w-1/2 h-full bg-white/20 skew-x-12 -translate-x-full group-hover/btn:translate-x-[300%] transition-transform duration-1000 ease-out pointer-events-none" />
+            <span className="tracking-wide">Hire Me Now</span>
+            <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 duration-200" />
           </a>
         </div>
 
