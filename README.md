@@ -56,8 +56,8 @@ CLOUDINARY_API_SECRET=your_api_secret
 # ==============================================================================
 # 3. NOTIFICATIONS (Telegram Bot)
 # ==============================================================================
-TELEGRAM_BOT_TOKEN=123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ
-TELEGRAM_CHAT_ID=123456789
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_CHAT_ID=
 
 # ==============================================================================
 # 4. AUTHENTICATION & ADMIN (NextAuth)
