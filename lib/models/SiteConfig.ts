@@ -55,7 +55,7 @@ const SiteConfigSchema = new Schema<ISiteConfig>(
       heroPortrait: {
         type: String,
         default:
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+          "https://lh3.googleusercontent.com/d/1T2VLGzKpGfz_CnPHwozeY77I0EbvTeaA",
       },
       introVideoUrl: {
         type: String,

@@ -67,12 +67,29 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
     }
   };
 
+  // Helper to convert Google Drive and other direct viewing links to raw image streams
+  const formatDirectImageUrl = (url: string): string => {
+    if (!url) return "";
+    const trimmed = url.trim();
+    if (trimmed.includes("drive.google.com")) {
+      const fileIdMatch =
+        trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) ||
+        trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/) ||
+        trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (fileIdMatch && fileIdMatch[1]) {
+        return `https://lh3.googleusercontent.com/d/${fileIdMatch[1]}`;
+      }
+    }
+    return trimmed;
+  };
+
   // URL Submission Handler
   const handleUrlSubmit = () => {
     if (!inputUrl.trim()) return;
+    const formatted = formatDirectImageUrl(inputUrl);
     setImageLoadError(false);
     setUploadError(null);
-    onChange(inputUrl.trim());
+    onChange(formatted);
   };
 
   const handleClear = () => {
@@ -123,6 +140,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                 <img
                   src={value}
                   alt="Preview"
+                  referrerPolicy="no-referrer"
                   onError={() => setImageLoadError(true)}
                   className="w-full h-full object-cover"
                 />
@@ -154,7 +172,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                   <input
                     type="text"
                     value={value}
-                    onChange={(e) => onChange(e.target.value)}
+                    onChange={(e) => onChange(formatDirectImageUrl(e.target.value))}
                     className="w-full px-3 py-2 rounded-lg bg-[#0B0F19] border border-[#202744] text-xs text-gray-200 font-mono focus:outline-none focus:border-pink-500"
                   />
                 </div>

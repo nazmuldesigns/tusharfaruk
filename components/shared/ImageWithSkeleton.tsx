@@ -30,6 +30,13 @@ export const ImageWithSkeleton: React.FC<ImageWithSkeletonProps> = ({
           isLoaded ? "opacity-100 scale-100 blur-0" : "opacity-0 scale-105 blur-sm"
         } ${className}`}
         onLoad={() => setIsLoaded(true)}
+        unoptimized={
+          props.unoptimized ||
+          (typeof src === "string" &&
+            (src.includes("googleusercontent.com") ||
+              src.includes("drive.google.com") ||
+              !src.includes("cloudinary.com")))
+        }
         {...props}
       />
     </div>
