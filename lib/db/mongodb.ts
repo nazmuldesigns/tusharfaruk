@@ -32,6 +32,8 @@ export async function connectToDatabase(): Promise<typeof mongoose | null> {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 4000, // 4s timeout to avoid Vercel build stalls
+      connectTimeoutMS: 5000,
     };
 
     cached.promise = mongoose.connect(uri, opts).then((m) => {
@@ -43,7 +45,8 @@ export async function connectToDatabase(): Promise<typeof mongoose | null> {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
-    console.error("MongoDB connection error:", e);
+    cached.conn = null;
+    console.warn("MongoDB connection warning (falling back to static data):", (e as Error)?.message || e);
     return null;
   }
 
