@@ -57,7 +57,7 @@ export const ContactSection: React.FC = () => {
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
-          {/* Left Luxury Animated Brand Card */}
+          {/* Left Luxury Animated Brand Card (Neon Navy Blue Theme) */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -69,60 +69,65 @@ export const ContactSection: React.FC = () => {
               initial="rest"
               whileInView="active"
               viewport={{ once: false, amount: 0.4 }}
-              className="luxury-brand-card is-active w-full"
+              className="luxury-brand-card is-active w-full group"
             >
-              {/* Rotating Gold Border */}
+              {/* Rotating Light Neon Navy Blue Border */}
               <div className="card-border" />
+
+              {/* Top Floating Send / Plane Badge */}
+              <div className="absolute top-5 right-5 z-20 flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-white shadow-[0_0_15px_rgba(56,189,248,0.3)] transition-transform group-hover:scale-110 group-hover:rotate-12 duration-300">
+                <Send className="w-3.5 h-3.5 text-cyan-300 transform -rotate-12 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </div>
 
               {/* Animated Center Content */}
               <div className="card-content">
                 <div className="card-logo-container">
-                  {/* Logo 1: Geometric TF Monogram */}
+                  {/* Logo 1: Geometric TF Monogram with Paper Plane Accent */}
                   <div className="logo1">
-                    <svg
-                      viewBox="0 0 40 40"
-                      className="w-8 h-8"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        id="logo-main"
-                        d="M6 10 H34 V15 H23 V34 H17 V15 H6 Z"
-                        fill="#bd9f67"
-                      />
-                      <path
-                        id="logo-second"
-                        d="M17 21 H30 V26 H17 Z"
-                        fill="#bd9f67"
-                        opacity="0.9"
-                      />
-                    </svg>
+                    <div className="relative w-9 h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-400/40 shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                      <svg
+                        viewBox="0 0 40 40"
+                        className="w-5 h-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 8 H34 V13 H23 V34 H17 V13 H6 Z"
+                          fill="#FFFFFF"
+                        />
+                        <path
+                          d="M17 19 H30 V24 H17 Z"
+                          fill="#38BDF8"
+                        />
+                      </svg>
+                    </div>
                   </div>
 
                   {/* Logo 2: Elegant Brand Typography */}
                   <div className="logo2">
                     <div className="flex flex-col justify-center pl-1">
-                      <span className="text-sm font-black tracking-wider text-[#bd9f67] leading-none uppercase font-heading">
+                      <span className="text-sm font-black tracking-wider text-white leading-none uppercase font-heading drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                         Tushar Faruk
                       </span>
-                      <span className="text-[7.5px] font-bold tracking-[2px] text-[#bd9f67]/80 leading-tight mt-1 uppercase">
-                        Studio
+                      <span className="text-[8px] font-bold tracking-[2px] text-cyan-300/90 leading-tight mt-1 uppercase flex items-center gap-1">
+                        <span>Creative Studio</span>
+                        <span className="w-1 h-1 rounded-full bg-cyan-400 animate-pulse" />
                       </span>
                     </div>
                   </div>
 
-                  {/* Dynamic Shimmer Trail */}
+                  {/* Dynamic Neon Trail */}
                   <span className="card-trail" />
                 </div>
 
                 {/* Subtitle Under Logo with tracking expansion */}
                 <span className="card-logo-bottom-text">
-                  Brand Designer
+                  Brand Designer &amp; Visuals
                 </span>
               </div>
 
               {/* Inset Bottom Text */}
               <span className="card-bottom-text">
-                Available For Projects
+                Let&apos;s Build Something Extraordinary
               </span>
             </motion.div>
           </motion.div>
