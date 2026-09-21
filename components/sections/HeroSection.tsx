@@ -173,34 +173,30 @@ export const HeroSection: React.FC = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Hero Image Artwork with Portrait Squircle Frame & Adobe Badges */}
+          {/* Right Hero Image Artwork with Uiverse Magic Card Glowing Gradient Frame & Adobe Badges */}
           <motion.div
-            className="lg:col-span-5 relative flex justify-center items-center"
+            className="lg:col-span-5 relative flex justify-center items-center py-4"
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Proportional Portrait Squircle Container */}
-            <div className="relative w-[280px] h-[350px] sm:w-[330px] sm:h-[400px] flex items-center justify-center">
-              {/* Vibrant Glowing Neon Backdrop */}
-              <div className="absolute inset-1 rounded-[36px] bg-gradient-to-tr from-[#38BDF8] via-[#8B5CF6] to-[#FF3B81] opacity-75 blur-2xl animate-pulse-glow" />
-              <div className="absolute -inset-1 rounded-[36px] bg-gradient-to-r from-[#FF3B81] via-[#A855F7] to-[#38BDF8] opacity-40" />
-
+            {/* Magic Card with Glowing Colorful Gradient Border & Ambient Underglow */}
+            <div className="magic-hero-card flex items-center justify-center">
               {/* Adobe Illustrator Tool Badge (Floating Top Corner) */}
               <IllustratorBadge />
 
               {/* Adobe Photoshop Tool Badge (Bottom Corner) */}
               <PhotoshopBadge />
 
-              {/* Main Portrait Squircle Frame */}
-              <div className="relative w-full h-full rounded-[30px] overflow-hidden border-2 border-white/20 shadow-2xl z-10 bg-[#13182C]">
+              {/* Inner Card Container Housing Hero Portrait Image */}
+              <div className="magic-card-inner shadow-2xl">
                 <ImageWithSkeleton
                   src={heroData.heroPortrait}
                   alt={heroData.name}
                   fill
                   priority
-                  sizes="(max-width: 768px) 280px, 340px"
-                  wrapperClassName="w-full h-full rounded-[30px]"
+                  sizes="(max-width: 768px) 290px, 340px"
+                  wrapperClassName="w-full h-full rounded-[1.75rem]"
                   className="object-cover object-top scale-102 hover:scale-108 transition-transform duration-700"
                 />
               </div>
