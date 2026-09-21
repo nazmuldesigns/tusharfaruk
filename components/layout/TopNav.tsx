@@ -33,10 +33,10 @@ export const TopNav: React.FC = () => {
             </button>
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#FF3B81] to-[#A855F7] flex items-center justify-center font-black text-xs text-white shadow-sm">
-                M
+                TF
               </div>
               <span className="font-bold text-xs tracking-wider uppercase text-white">
-                MARK DAVIS
+                TUSHAR FARUK
               </span>
             </div>
           </div>

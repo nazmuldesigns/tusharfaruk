@@ -57,7 +57,7 @@ export default function Home() {
 
           {/* Minimal Footer */}
           <footer className="border-t border-[#1E2540] py-6 px-8 text-center text-xs text-gray-400 mb-12 lg:mb-0">
-            <p>© {new Date().getFullYear()} Mark Davis. All rights reserved. Crafted with precision.</p>
+            <p>© {new Date().getFullYear()} Tushar Faruk. All rights reserved. Crafted with precision.</p>
           </footer>
         </main>
       </div>

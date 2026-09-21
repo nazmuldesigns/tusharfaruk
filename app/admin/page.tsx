@@ -144,7 +144,7 @@ export default function AdminDashboardOverview() {
         <div className="relative z-10 space-y-3 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/10 text-pink-400 border border-pink-500/20">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Mark Davis Portfolio Administration</span>
+            <span>Tushar Faruk Portfolio Administration</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF3B81] to-[#A855F7]">Admin</span>

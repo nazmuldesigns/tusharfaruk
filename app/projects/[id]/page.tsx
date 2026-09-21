@@ -57,14 +57,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!project) {
     return {
-      title: "Project Not Found | Mark Davis",
+      title: "Project Not Found | Tushar Faruk",
       description: "The requested project case study could not be found.",
     };
   }
 
-  const title = `${project.title} | Mark Davis UI/UX Case Study`;
+  const title = `${project.title} | Tushar Faruk Brand Design Case Study`;
   const description =
-    project.overview || project.subtitle || "High-impact UI/UX case study and design system by Mark Davis.";
+    project.overview || project.subtitle || "High-impact visual identity and brand design system by Tushar Faruk.";
   const image = project.image || personalInfo.heroPortrait;
 
   return {
@@ -72,9 +72,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description,
     keywords: [
       project.category,
-      "UI/UX Design",
+      "Brand Identity Design",
       "Case Study",
-      "Mark Davis",
+      "Tushar Faruk",
       ...(project.tools || []),
     ],
     openGraph: {

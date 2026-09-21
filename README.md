@@ -1,4 +1,4 @@
-# 🚀 Mark Davis — UI/UX Designer Portfolio & Admin CMS
+# 🚀 Tushar Faruk — Brand & Visual Identity Designer Portfolio & Admin CMS
 
 > A high-performance, dark-theme portfolio website and full-featured Admin Content Management System built with **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, **MongoDB + Mongoose**, **NextAuth**, and **Cloudinary**.
 
@@ -245,4 +245,4 @@ ADMIN_PASSWORD=YourStrongPasswordHere!
 
 ## 📄 License
 
-MIT License © 2026 Mark Davis. All rights reserved.
+MIT License © 2026 Tushar Faruk. All rights reserved.

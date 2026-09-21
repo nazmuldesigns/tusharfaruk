@@ -44,7 +44,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
     return (
       <div className="min-h-screen bg-[#0A0B10] flex flex-col items-center justify-center gap-3 text-white">
         <Loader2 className="w-8 h-8 animate-spin text-pink-500" />
-        <p className="text-xs text-gray-400 font-mono">Authenticating Mark Davis Admin...</p>
+        <p className="text-xs text-gray-400 font-mono">Authenticating Tushar Faruk Admin...</p>
       </div>
     );
   }

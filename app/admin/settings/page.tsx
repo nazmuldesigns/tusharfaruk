@@ -87,8 +87,8 @@ export default function AdminSettingsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: "Admin System Test",
-          email: "admin@tusharfaruk.com",
-          message: "🚀 Telegram Bot Dispatcher verification test from Mark Davis Admin Panel.",
+          email: "tusharfaruk@gmail.com",
+          message: "🚀 Telegram Bot Dispatcher verification test from Tushar Faruk Admin Panel.",
         }),
       });
 
@@ -272,7 +272,7 @@ export default function AdminSettingsPage() {
               <span>Database Seeder &amp; Reset</span>
             </h3>
             <p className="text-xs text-gray-400 mt-1 max-w-xl leading-relaxed">
-              Populate or refresh the MongoDB database with initial sample case studies, services, client testimonials, and site configuration matching the Mark Davis portfolio design.
+              Populate or refresh the MongoDB database with initial brand case studies, services, client testimonials, and site configuration matching the Tushar Faruk portfolio design.
             </p>
           </div>
 

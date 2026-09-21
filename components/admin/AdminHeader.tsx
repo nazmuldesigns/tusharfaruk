@@ -47,7 +47,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ onOpenMobile }) => {
             {getSectionTitle()}
           </h2>
           <p className="text-[11px] text-gray-400 hidden sm:block">
-            Mark Davis Portfolio Management
+            Tushar Faruk Portfolio Management
           </p>
         </div>
       </div>

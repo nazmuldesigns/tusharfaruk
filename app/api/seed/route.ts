@@ -3,7 +3,8 @@ import { connectToDatabase } from "@/lib/db/mongodb";
 import Project from "@/lib/models/Project";
 import Service from "@/lib/models/Service";
 import Testimonial from "@/lib/models/Testimonial";
-import { fallbackProjects, fallbackServices, fallbackTestimonials } from "@/lib/data";
+import SiteConfig from "@/lib/models/SiteConfig";
+import { fallbackProjects, fallbackServices, fallbackTestimonials, personalInfo } from "@/lib/data";
 
 export async function POST() {
   try {
@@ -18,7 +19,7 @@ export async function POST() {
       );
     }
 
-    // Clear and re-populate
+    // Clear and re-populate with 15 brand design projects
     await Project.deleteMany({});
     await Service.deleteMany({});
     await Testimonial.deleteMany({});
@@ -47,52 +48,47 @@ export async function POST() {
       })
     );
 
-    // Also ensure SiteConfig is seeded
-    const SiteConfig = (await import("@/lib/models/SiteConfig")).default;
-    const existingConfig = await SiteConfig.findOne({});
-    if (!existingConfig) {
-      await SiteConfig.create({
-        hero: {
-          greeting: "HELLO, I'M",
-          name: "Mark Davis",
-          title: "UI/UX Designer",
-          tagline: "I Design Experiences That Make an Impact.",
-          bio: "I'm a UI/UX Designer helping startups and businesses create digital products users love.",
-          heroPortrait: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
-          experienceYears: "5+",
-        },
-        about: {
-          heading: "About Me",
-          bioText: "Specialized in modern web and mobile product design, building user-centric interfaces.",
-          yearsExperience: "5+",
-          completedProjects: "120+",
-          happyClients: "80+",
-          awardsReceived: "15+",
-        },
-        skills: [
-          { name: "Figma & Design Systems", level: 95, category: "UI/UX" },
-          { name: "React & Next.js", level: 90, category: "Frontend" },
-          { name: "Tailwind CSS & Framer Motion", level: 92, category: "Frontend" },
-          { name: "TypeScript", level: 85, category: "Languages" },
-        ],
-        contact: {
-          email: "tusharfaruk@gmail.com",
-          phone: "+1 234 567 8900",
-          location: "San Francisco, CA",
-          cvUrl: "/cv/Mark_Davis_CV.pdf",
-          socials: {
-            dribbble: "https://dribbble.com",
-            behance: "https://behance.net",
-            linkedin: "https://linkedin.com",
-            github: "https://github.com",
-          },
-        },
-      });
-    }
+    // Update SiteConfig to Tushar Faruk
+    await SiteConfig.deleteMany({});
+    await SiteConfig.create({
+      hero: {
+        greeting: personalInfo.greeting,
+        name: personalInfo.name,
+        title: personalInfo.title,
+        tagline: personalInfo.tagline,
+        bio: personalInfo.bio,
+        heroPortrait: personalInfo.heroPortrait,
+        introVideoUrl: personalInfo.introVideoUrl,
+        experienceYears: personalInfo.experienceYears,
+      },
+      about: {
+        heading: "About Me",
+        bioText: personalInfo.bio,
+        yearsExperience: "5+",
+        completedProjects: "120+",
+        happyClients: "80+",
+        awardsReceived: "15+",
+      },
+      skills: [
+        { name: "Brand Identity & Strategy", level: 98, category: "Branding" },
+        { name: "Adobe Illustrator (Vector Art)", level: 96, category: "Design Tools" },
+        { name: "Adobe Photoshop (Mockups & Retouch)", level: 94, category: "Design Tools" },
+        { name: "Logo & Typography Systems", level: 95, category: "Typography" },
+        { name: "Luxury Product Packaging", level: 90, category: "Packaging" },
+        { name: "Figma UI & Design Systems", level: 88, category: "Digital" },
+      ],
+      contact: {
+        email: personalInfo.email,
+        phone: personalInfo.phone,
+        location: personalInfo.location,
+        cvUrl: personalInfo.cvUrl,
+        socials: personalInfo.socials,
+      },
+    });
 
     return NextResponse.json({
       success: true,
-      message: "Database seeded successfully with Mark Davis portfolio data!",
+      message: "Database seeded successfully with Tushar Faruk brand designer data!",
     });
   } catch (error) {
     console.error("Seed error:", error);

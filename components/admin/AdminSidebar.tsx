@@ -47,13 +47,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ onCloseMobile, unrea
         <div className="p-6 pb-4 flex items-center justify-between border-b border-[#1E2540]/60">
           <Link href="/admin" className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF3B81] via-[#A855F7] to-[#6366F1] p-[2px] shadow-glow-sm">
-              <div className="w-full h-full bg-[#101426] rounded-[10px] flex items-center justify-center font-extrabold text-sm text-transparent bg-clip-text bg-gradient-to-br from-[#FF3B81] to-[#A855F7]">
-                M
+              <div className="w-full h-full bg-[#101426] rounded-[10px] flex items-center justify-center font-extrabold text-xs tracking-wider text-transparent bg-clip-text bg-gradient-to-br from-[#FF3B81] to-[#A855F7]">
+                TF
               </div>
             </div>
             <div>
               <h1 className="text-xs font-bold tracking-wider text-white uppercase">
-                Mark Davis
+                Tushar Faruk
               </h1>
               <span className="text-[10px] font-semibold text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded border border-pink-500/20">
                 ADMIN PANEL

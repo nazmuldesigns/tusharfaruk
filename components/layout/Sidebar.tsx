@@ -27,6 +27,26 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection: propActive, onNavigate }) => {
   const [active, setActive] = useState(propActive || "home");
+  const [profileData, setProfileData] = useState({
+    name: personalInfo.name,
+    title: personalInfo.title,
+    cvUrl: personalInfo.cvUrl,
+  });
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((resData) => {
+        if (resData.success && resData.data?.hero) {
+          setProfileData({
+            name: resData.data.hero.name || personalInfo.name,
+            title: resData.data.hero.title || personalInfo.title,
+            cvUrl: resData.data.contact?.cvUrl || personalInfo.cvUrl,
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,17 +90,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection: propActive, onN
       {/* Top Header Logo */}
       <div className="p-6 pb-4">
         <Link href="#home" className="flex items-center gap-3.5 group">
-          {/* Logo Mark M */}
+          {/* Logo Mark TF */}
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF3B81] via-[#A855F7] to-[#6366F1] p-[2px] shadow-glow-sm group-hover:shadow-glow-pink transition-all">
-            <div className="w-full h-full bg-[#101426] rounded-[10px] flex items-center justify-center font-extrabold text-lg text-transparent bg-clip-text bg-gradient-to-br from-[#FF3B81] to-[#A855F7]">
-              M
+            <div className="w-full h-full bg-[#101426] rounded-[10px] flex items-center justify-center font-extrabold text-sm tracking-wider text-transparent bg-clip-text bg-gradient-to-br from-[#FF3B81] to-[#A855F7]">
+              TF
             </div>
           </div>
           <div>
             <h1 className="text-sm font-bold tracking-wider text-white uppercase group-hover:text-pink-400 transition-colors">
-              {personalInfo.name}
+              {profileData.name}
             </h1>
-            <p className="text-xs text-[#94A3B8] font-medium">{personalInfo.title}</p>
+            <p className="text-xs text-[#94A3B8] font-medium">{profileData.title}</p>
           </div>
         </Link>
       </div>
@@ -118,10 +138,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection: propActive, onN
         <div className="p-4 rounded-2xl bg-gradient-to-br from-[#401944] via-[#241740] to-[#13182C] border border-purple-500/30 shadow-glow-sm relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-24 h-24 bg-pink-500/15 rounded-full blur-xl pointer-events-none" />
           <h3 className="text-xs font-bold text-white mb-1.5 leading-snug">
-            Available for Freelance Projects
+            Available for Brand Projects
           </h3>
           <p className="text-[11px] text-[#CBD5E1] mb-3 leading-relaxed">
-            Let&apos;s build something amazing together!
+            Let&apos;s build an iconic brand together!
           </p>
           <a
             href="#contact"
@@ -141,7 +161,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection: propActive, onN
             <Download className="w-3 h-3 text-[#94A3B8]" />
           </div>
           <a
-            href={personalInfo.cvUrl}
+            href={profileData.cvUrl}
             target="_blank"
             rel="noopener noreferrer"
             download
@@ -149,7 +169,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection: propActive, onN
           >
             <FileCode2 className="w-3.5 h-3.5 text-pink-400 group-hover:scale-110 transition-transform" />
             <span className="text-xs text-gray-300 group-hover:text-white truncate font-medium">
-              Mark_Davis_CV.pdf
+              Tushar_Faruk_CV.pdf
             </span>
           </a>
         </div>

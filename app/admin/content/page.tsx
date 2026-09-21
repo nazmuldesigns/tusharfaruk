@@ -24,6 +24,7 @@ interface SiteConfigData {
     tagline: string;
     bio: string;
     heroPortrait: string;
+    introVideoUrl?: string;
     experienceYears: string;
   };
   about: {
@@ -299,7 +300,7 @@ export default function AdminContentPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
             <div>
               <ImageUploader
-                label="Hero Portrait Photo"
+                label="Hero Portrait & Base Profile Image"
                 value={formData.hero.heroPortrait}
                 onChange={(url) =>
                   setFormData({
@@ -310,27 +311,53 @@ export default function AdminContentPage() {
                 folder="portfolio/hero"
                 aspectRatio="square"
               />
+              <p className="text-[11px] text-gray-500 mt-1.5">
+                This acts as the primary profile artwork across your Hero section, squircle frame, and site metadata.
+              </p>
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-gray-300 mb-1">
-                Experience Badge Text
-              </label>
-              <input
-                type="text"
-                value={formData.hero.experienceYears}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    hero: { ...formData.hero, experienceYears: e.target.value },
-                  })
-                }
-                placeholder="5+"
-                className="w-full px-3.5 py-2 rounded-xl bg-[#0B0F19] border border-[#202744] text-xs text-white"
-              />
-              <p className="text-[11px] text-gray-500 mt-1">
-                Appears on the circular floating experience badge next to your portrait.
-              </p>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-gray-300 mb-1">
+                  &quot;Watch Intro&quot; Action Button URL (YouTube / Vimeo / MP4)
+                </label>
+                <input
+                  type="text"
+                  value={formData.hero.introVideoUrl || ""}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      hero: { ...formData.hero, introVideoUrl: e.target.value },
+                    })
+                  }
+                  placeholder="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#0B0F19] border border-[#202744] text-xs text-white font-mono"
+                />
+                <p className="text-[11px] text-gray-500 mt-1">
+                  The video played when visitors click &quot;Watch Intro&quot; in the hero section.
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-300 mb-1">
+                  Experience Badge Text
+                </label>
+                <input
+                  type="text"
+                  value={formData.hero.experienceYears}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      hero: { ...formData.hero, experienceYears: e.target.value },
+                    })
+                  }
+                  placeholder="5+"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#0B0F19] border border-[#202744] text-xs text-white"
+                />
+                <p className="text-[11px] text-gray-500 mt-1">
+                  Appears on the floating experience badge next to your portrait squircle.
+                </p>
+              </div>
             </div>
           </div>
         </div>

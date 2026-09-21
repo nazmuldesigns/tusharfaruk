@@ -8,6 +8,7 @@ export interface ISiteConfig extends Document {
     tagline: string;
     bio: string;
     heroPortrait: string;
+    introVideoUrl: string;
     experienceYears: string;
   };
   about: {
@@ -43,18 +44,22 @@ const SiteConfigSchema = new Schema<ISiteConfig>(
   {
     hero: {
       greeting: { type: String, default: "HELLO, I'M" },
-      name: { type: String, default: "Mark Davis" },
-      title: { type: String, default: "UI/UX Designer" },
-      tagline: { type: String, default: "I Design Experiences That Make an Impact." },
+      name: { type: String, default: "Tushar Faruk" },
+      title: { type: String, default: "Brand Designer" },
+      tagline: { type: String, default: "I Craft Iconic Brands & Visual Systems That Stand Out." },
       bio: {
         type: String,
         default:
-          "I'm a UI/UX Designer helping startups and businesses create digital products users love.",
+          "I'm a Brand & Visual Identity Designer helping startups and global businesses build memorable, high-impact brand systems and visual experiences.",
       },
       heroPortrait: {
         type: String,
         default:
           "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+      },
+      introVideoUrl: {
+        type: String,
+        default: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1",
       },
       experienceYears: { type: String, default: "5+" },
     },
@@ -63,7 +68,7 @@ const SiteConfigSchema = new Schema<ISiteConfig>(
       bioText: {
         type: String,
         default:
-          "Specialized in modern web and mobile product design, building user-centric interfaces.",
+          "Specialized in modern visual identity, logo systems, luxury packaging, and creative brand direction.",
       },
       yearsExperience: { type: String, default: "5+" },
       completedProjects: { type: String, default: "120+" },
@@ -73,16 +78,16 @@ const SiteConfigSchema = new Schema<ISiteConfig>(
     skills: [
       {
         name: { type: String },
-        level: { type: Number, default: 90 },
-        category: { type: String, default: "Design" },
+        level: { type: Number, default: 95 },
+        category: { type: String, default: "Brand Design" },
         icon: { type: String },
       },
     ],
     contact: {
-      email: { type: String, default: "hello@markdavis.com" },
-      phone: { type: String, default: "+1 234 567 8900" },
-      location: { type: String, default: "San Francisco, CA" },
-      cvUrl: { type: String, default: "/cv/Mark_Davis_CV.pdf" },
+      email: { type: String, default: "tusharfaruk@gmail.com" },
+      phone: { type: String, default: "+880 1700 000000" },
+      location: { type: String, default: "Dhaka, Bangladesh / Remote Worldwide" },
+      cvUrl: { type: String, default: "/cv/Tushar_Faruk_CV.pdf" },
       socials: {
         dribbble: { type: String, default: "https://dribbble.com" },
         behance: { type: String, default: "https://behance.net" },

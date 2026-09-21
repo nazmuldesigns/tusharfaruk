@@ -11,6 +11,7 @@ const defaultSettings = {
     tagline: personalInfo.tagline,
     bio: personalInfo.bio,
     heroPortrait: personalInfo.heroPortrait,
+    introVideoUrl: personalInfo.introVideoUrl,
     experienceYears: personalInfo.experienceYears,
   },
   about: {
@@ -22,12 +23,12 @@ const defaultSettings = {
     awardsReceived: "15+",
   },
   skills: [
-    { name: "Figma & Design Systems", level: 95, category: "UI/UX" },
-    { name: "React & Next.js", level: 90, category: "Frontend" },
-    { name: "Tailwind CSS & Framer Motion", level: 92, category: "Frontend" },
-    { name: "TypeScript", level: 85, category: "Languages" },
-    { name: "Mobile App Design", level: 88, category: "Mobile" },
-    { name: "Brand & Visual Identity", level: 90, category: "Branding" },
+    { name: "Brand Identity & Strategy", level: 98, category: "Branding" },
+    { name: "Adobe Illustrator (Vector Art)", level: 96, category: "Design Tools" },
+    { name: "Adobe Photoshop (Mockups & Retouch)", level: 94, category: "Design Tools" },
+    { name: "Logo & Typography Systems", level: 95, category: "Typography" },
+    { name: "Luxury Product Packaging", level: 90, category: "Packaging" },
+    { name: "Figma UI & Design Systems", level: 88, category: "Digital" },
   ],
   contact: {
     email: personalInfo.email,
