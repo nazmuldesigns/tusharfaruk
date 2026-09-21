@@ -46,6 +46,10 @@ export async function GET() {
       process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID
     );
 
+    const maskedUri = process.env.MONGODB_URI
+      ? process.env.MONGODB_URI.replace(/\/\/[^:]+:[^@]+@/, "//***:***@")
+      : "Not configured";
+
     return NextResponse.json({
       success: true,
       stats: {
@@ -57,8 +61,20 @@ export async function GET() {
       },
       health: {
         database: isDbConnected,
+        mongodb: isDbConnected,
         cloudinary: cloudinaryConfigured,
         telegram: telegramConfigured,
+      },
+      integrations: {
+        mongodb: isDbConnected,
+        cloudinary: cloudinaryConfigured,
+        telegram: telegramConfigured,
+      },
+      details: {
+        mongodbUri: maskedUri,
+        cloudinaryCloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "Not configured",
+        telegramChatId: process.env.TELEGRAM_CHAT_ID ? `***${process.env.TELEGRAM_CHAT_ID.slice(-4)}` : "Not configured",
+        adminEmail: process.env.ADMIN_EMAIL || "Not configured",
       },
       recentMessages,
     });

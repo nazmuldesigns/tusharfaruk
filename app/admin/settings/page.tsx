@@ -23,14 +23,33 @@ export default function AdminSettingsPage() {
   const [telegramResult, setTelegramResult] = useState<{ success: boolean; message: string } | null>(null);
 
   const [dbStatus, setDbStatus] = useState<"checking" | "connected" | "disconnected">("checking");
+  const [details, setDetails] = useState<{
+    mongodbUri: string;
+    cloudinaryCloudName: string;
+    telegramChatId: string;
+    adminEmail: string;
+  }>({
+    mongodbUri: "Checking...",
+    cloudinaryCloudName: "Checking...",
+    telegramChatId: "Checking...",
+    adminEmail: "Checking...",
+  });
 
-  useEffect(() => {
+  const fetchStats = () => {
     fetch("/api/admin/stats")
       .then((res) => res.json())
       .then((data) => {
-        setDbStatus(data.integrations?.mongodb ? "connected" : "disconnected");
+        const isConnected = data.health?.database ?? data.integrations?.mongodb ?? false;
+        setDbStatus(isConnected ? "connected" : "disconnected");
+        if (data.details) {
+          setDetails(data.details);
+        }
       })
       .catch(() => setDbStatus("disconnected"));
+  };
+
+  useEffect(() => {
+    fetchStats();
   }, []);
 
   // Handle Seeding
@@ -140,8 +159,8 @@ export default function AdminSettingsPage() {
             )}
           </div>
 
-          <div className="p-3.5 rounded-xl bg-[#0B0F19] text-xs text-gray-400 space-y-1 font-mono">
-            <p>URI: mongodb+srv://tusharfaruk:***@cluster0.o5y6nfe.mongodb.net</p>
+          <div className="p-3.5 rounded-xl bg-[#0B0F19] text-xs text-gray-400 space-y-1 font-mono break-all">
+            <p>URI: {details.mongodbUri}</p>
             <p>Database: portfolio</p>
           </div>
         </div>
@@ -165,7 +184,7 @@ export default function AdminSettingsPage() {
           </div>
 
           <div className="p-3.5 rounded-xl bg-[#0B0F19] text-xs text-gray-400 space-y-1 font-mono">
-            <p>Cloud Name: gswx0vqm</p>
+            <p>Cloud Name: {details.cloudinaryCloudName}</p>
             <p>Transformations: f_auto, q_auto:good (WebP/AVIF)</p>
           </div>
         </div>
@@ -189,8 +208,8 @@ export default function AdminSettingsPage() {
           </div>
 
           <div className="p-3.5 rounded-xl bg-[#0B0F19] text-xs text-gray-400 space-y-1 font-mono">
-            <p>Bot Token: 865187766:AAH4Z3Q***</p>
-            <p>Chat ID: 5202613725</p>
+            <p>Chat ID: {details.telegramChatId}</p>
+            <p>Status: Dispatcher Ready</p>
           </div>
 
           <div className="flex items-center justify-between pt-1">
@@ -238,7 +257,7 @@ export default function AdminSettingsPage() {
           </div>
 
           <div className="p-3.5 rounded-xl bg-[#0B0F19] text-xs text-gray-400 space-y-1 font-mono">
-            <p>Admin: admin@tusharfaruk@gmail.com</p>
+            <p>Admin Email: {details.adminEmail}</p>
             <p>Strategy: JWT session tokens</p>
           </div>
         </div>
