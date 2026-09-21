@@ -271,3 +271,188 @@ body {
   position: relative;
   background: #13182C;
 }
+
+/* ==========================================================================
+   Luxury Animated Brand Card (Contact Section Left Card)
+   ========================================================================== */
+.luxury-brand-card {
+  width: 100%;
+  min-height: 320px;
+  height: 100%;
+  background: #243137;
+  position: relative;
+  display: grid;
+  place-content: center;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.luxury-brand-card .card-border {
+  position: absolute;
+  inset: 0px;
+  border: 2px solid #bd9f67;
+  opacity: 0;
+  transform: rotate(10deg);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.luxury-brand-card .card-bottom-text {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  font-size: 8px;
+  text-transform: uppercase;
+  padding: 0px 8px;
+  color: #bd9f67;
+  background: #243137;
+  opacity: 0;
+  letter-spacing: 7px;
+  white-space: nowrap;
+  font-weight: 700;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.luxury-brand-card .card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.5s ease-in-out;
+  padding: 20px;
+}
+
+.luxury-brand-card .card-content .card-logo-container {
+  height: 38px;
+  position: relative;
+  width: 38px;
+  overflow: hidden;
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-brand-card .card-content .logo1 {
+  height: 36px;
+  width: 36px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.luxury-brand-card .card-content .logo2 {
+  height: 36px;
+  position: absolute;
+  left: 42px;
+  top: 0;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.luxury-brand-card .card-content .card-trail {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.luxury-brand-card .card-content .card-logo-bottom-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 36px;
+  color: #bd9f67;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  opacity: 0;
+  letter-spacing: 0px;
+  white-space: nowrap;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
+/* Active / In-View / Hover State */
+.luxury-brand-card.is-active,
+.luxury-brand-card:hover {
+  border-radius: 0.75rem;
+  transform: scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(189, 159, 103, 0.2);
+}
+
+.luxury-brand-card.is-active .card-logo-container,
+.luxury-brand-card:hover .card-logo-container {
+  width: 175px;
+  animation: luxuryBorderGlow 1s ease-in-out;
+}
+
+.luxury-brand-card.is-active .card-border,
+.luxury-brand-card:hover .card-border {
+  inset: 14px;
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+.luxury-brand-card.is-active .card-bottom-text,
+.luxury-brand-card:hover .card-bottom-text {
+  letter-spacing: 3px;
+  opacity: 1;
+  transform: translateX(-50%);
+}
+
+.luxury-brand-card.is-active .card-content .card-logo-bottom-text,
+.luxury-brand-card:hover .card-content .card-logo-bottom-text {
+  opacity: 1;
+  letter-spacing: 6px;
+}
+
+.luxury-brand-card.is-active .card-trail,
+.luxury-brand-card:hover .card-trail {
+  animation: luxuryTrail 1.1s ease-in-out;
+}
+
+@keyframes luxuryBorderGlow {
+  0% {
+    border-right: 1px solid transparent;
+  }
+  15% {
+    border-right: 1.5px solid #bd9f67;
+  }
+  80% {
+    border-right: 1.5px solid #bd9f67;
+  }
+  100% {
+    border-right: 1px solid transparent;
+  }
+}
+
+@keyframes luxuryTrail {
+  0% {
+    background: linear-gradient(90deg, rgba(189, 159, 103, 0) 90%, rgb(189, 159, 103) 100%);
+    opacity: 0;
+  }
+  30% {
+    background: linear-gradient(90deg, rgba(189, 159, 103, 0) 65%, rgb(189, 159, 103) 100%);
+    opacity: 1;
+  }
+  70% {
+    background: linear-gradient(90deg, rgba(189, 159, 103, 0) 65%, rgb(189, 159, 103) 100%);
+    opacity: 1;
+  }
+  95% {
+    background: linear-gradient(90deg, rgba(189, 159, 103, 0) 90%, rgb(189, 159, 103) 100%);
+    opacity: 0;
+  }
+}
+

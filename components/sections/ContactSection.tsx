@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Send, Mail, Phone, MapPin, CheckCircle2, AlertCircle, Loader2, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Send, Mail, Phone, MapPin, CheckCircle2, AlertCircle, Loader2, Sparkles, X, Check } from "lucide-react";
 import { personalInfo } from "@/lib/data";
 
 export const ContactSection: React.FC = () => {
@@ -13,6 +13,8 @@ export const ContactSection: React.FC = () => {
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [feedbackMsg, setFeedbackMsg] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [submittedData, setSubmittedData] = useState<{ name: string; email: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,11 +37,9 @@ export const ContactSection: React.FC = () => {
       const data = await res.json();
       if (res.ok && data.success) {
         setStatus("success");
-        setFeedbackMsg(
-          data.telegramSent
-            ? "Thank you! Your message has been sent and dispatched to Telegram."
-            : "Thank you! Your message has been received successfully."
-        );
+        setFeedbackMsg("Message received successfully!");
+        setSubmittedData({ name: formData.name, email: formData.email });
+        setShowModal(true);
         setFormData({ name: "", email: "", message: "" });
       } else {
         setStatus("error");
@@ -56,99 +56,134 @@ export const ContactSection: React.FC = () => {
     <section id="contact" className="py-16 relative">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          {/* Left Gradient Card: Let's Work Together */}
+          
+          {/* Left Luxury Animated Brand Card */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-4 p-8 rounded-2xl bg-gradient-to-br from-[#EC4899] via-[#A855F7] to-[#6366F1] shadow-glow-md text-white flex flex-col justify-between relative overflow-hidden group hover:shadow-[0_0_35px_rgba(236,72,153,0.4)] transition-shadow duration-500"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 flex"
           >
-            <div className="space-y-4 relative z-10">
-              {/* Paper Plane Icon */}
-              <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105 duration-300">
-                <Send className="w-5 h-5" />
-              </div>
+            <motion.div
+              initial="rest"
+              whileInView="active"
+              viewport={{ once: false, amount: 0.4 }}
+              className="luxury-brand-card is-active w-full"
+            >
+              {/* Rotating Gold Border */}
+              <div className="card-border" />
 
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-white/80 flex items-center gap-1 mb-1">
-                  <Sparkles className="w-3 h-3" />
-                  <span>START A PROJECT</span>
+              {/* Animated Center Content */}
+              <div className="card-content">
+                <div className="card-logo-container">
+                  {/* Logo 1: Geometric TF Monogram */}
+                  <div className="logo1">
+                    <svg
+                      viewBox="0 0 40 40"
+                      className="w-8 h-8"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        id="logo-main"
+                        d="M6 10 H34 V15 H23 V34 H17 V15 H6 Z"
+                        fill="#bd9f67"
+                      />
+                      <path
+                        id="logo-second"
+                        d="M17 21 H30 V26 H17 Z"
+                        fill="#bd9f67"
+                        opacity="0.9"
+                      />
+                    </svg>
+                  </div>
+
+                  {/* Logo 2: Elegant Brand Typography */}
+                  <div className="logo2">
+                    <div className="flex flex-col justify-center pl-1">
+                      <span className="text-sm font-black tracking-wider text-[#bd9f67] leading-none uppercase font-heading">
+                        Tushar Faruk
+                      </span>
+                      <span className="text-[7.5px] font-bold tracking-[2px] text-[#bd9f67]/80 leading-tight mt-1 uppercase">
+                        Studio
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Dynamic Shimmer Trail */}
+                  <span className="card-trail" />
+                </div>
+
+                {/* Subtitle Under Logo with tracking expansion */}
+                <span className="card-logo-bottom-text">
+                  Brand Designer
                 </span>
-                <h3 className="text-2xl font-black text-white tracking-tight">
-                  Let&apos;s Work Together!
-                </h3>
-                <p className="text-xs text-white/90 mt-2 leading-relaxed font-medium">
-                  Have a design or engineering project in mind? Let&apos;s build something extraordinary.
-                </p>
               </div>
-            </div>
 
-            <div className="mt-8 pt-6 border-t border-white/20 relative z-10">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-white/80">
-                Available for freelance &amp; full-time contracts
+              {/* Inset Bottom Text */}
+              <span className="card-bottom-text">
+                Available For Projects
               </span>
-            </div>
+            </motion.div>
           </motion.div>
 
-          {/* Center Form & Right Contact Info */}
+          {/* Right Sleek Dark-Navy Contact Form & Details */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-8 p-6 sm:p-8 rounded-2xl bg-[#13182C] border border-[#1E2540] grid grid-cols-1 md:grid-cols-12 gap-6 shadow-glow-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            className="lg:col-span-7 p-6 sm:p-8 rounded-2xl bg-[#13182C] border border-[#1E2540] grid grid-cols-1 md:grid-cols-12 gap-6 shadow-[0_15px_40px_rgba(0,0,0,0.4)] relative"
           >
             {/* Form Area */}
             <form onSubmit={handleSubmit} className="md:col-span-7 space-y-4 flex flex-col justify-between">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">
+                    Your Name
+                  </label>
                   <input
                     type="text"
-                    placeholder="Your Name"
+                    placeholder="e.g. John Doe"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-[#0A0E1A] border border-[#1E2540] text-xs text-white placeholder-gray-500 focus:outline-none focus:border-pink-500/70 focus:shadow-[0_0_15px_rgba(255,59,129,0.15)] transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-[#0A0E1A] border border-[#1E2540] text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#38BDF8] focus:shadow-[0_0_15px_rgba(56,189,248,0.2)] transition-all"
                   />
                 </div>
                 <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">
+                    Your Email
+                  </label>
                   <input
                     type="email"
-                    placeholder="Your Email"
+                    placeholder="e.g. john@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-[#0A0E1A] border border-[#1E2540] text-xs text-white placeholder-gray-500 focus:outline-none focus:border-pink-500/70 focus:shadow-[0_0_15px_rgba(255,59,129,0.15)] transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-[#0A0E1A] border border-[#1E2540] text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#38BDF8] focus:shadow-[0_0_15px_rgba(56,189,248,0.2)] transition-all"
                   />
                 </div>
               </div>
 
               <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5">
+                  Project Message
+                </label>
                 <textarea
                   rows={4}
-                  placeholder="Tell me about your project, timeline, and goals..."
+                  placeholder="Tell me about your brand vision, project scope, timeline, and goals..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-[#0A0E1A] border border-[#1E2540] text-xs text-white placeholder-gray-500 focus:outline-none focus:border-pink-500/70 focus:shadow-[0_0_15px_rgba(255,59,129,0.15)] transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-[#0A0E1A] border border-[#1E2540] text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#38BDF8] focus:shadow-[0_0_15px_rgba(56,189,248,0.2)] transition-all resize-none"
                 />
               </div>
 
-              {/* Status Alert */}
-              {feedbackMsg && (
-                <div
-                  className={`flex items-center gap-2 p-3 rounded-xl text-xs font-medium ${
-                    status === "success"
-                      ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                      : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
-                  }`}
-                >
-                  {status === "success" ? (
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
-                  ) : (
-                    <AlertCircle className="w-4 h-4 shrink-0" />
-                  )}
+              {/* Status Alert for Inline Error */}
+              {feedbackMsg && status === "error" && (
+                <div className="flex items-center gap-2 p-3 rounded-xl text-xs font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{feedbackMsg}</span>
                 </div>
               )}
@@ -157,12 +192,12 @@ export const ContactSection: React.FC = () => {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="gradient-btn-primary inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-xs font-bold text-white shadow-glow-sm hover:shadow-glow-pink disabled:opacity-50 transition-all duration-200"
+                  className="gradient-btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-white shadow-glow-sm hover:shadow-glow-pink disabled:opacity-50 transition-all duration-200 cursor-pointer"
                 >
                   {status === "loading" ? (
                     <>
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      <span>Sending Alert...</span>
+                      <span>Sending Message...</span>
                     </>
                   ) : (
                     <>
@@ -177,8 +212,8 @@ export const ContactSection: React.FC = () => {
             {/* Right Contact Details */}
             <div className="md:col-span-5 md:border-l md:border-[#1E2540] md:pl-6 space-y-6 flex flex-col justify-center">
               {/* Email */}
-              <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 shrink-0">
+              <div className="flex items-start gap-3 group">
+                <div className="w-9 h-9 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 shrink-0 group-hover:scale-105 transition-transform">
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
@@ -192,8 +227,8 @@ export const ContactSection: React.FC = () => {
               </div>
 
               {/* Phone */}
-              <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+              <div className="flex items-start gap-3 group">
+                <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-105 transition-transform">
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
@@ -209,8 +244,8 @@ export const ContactSection: React.FC = () => {
               </div>
 
               {/* Location */}
-              <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-cyan-400 shrink-0">
+              <div className="flex items-start gap-3 group">
+                <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-cyan-400 shrink-0 group-hover:scale-105 transition-transform">
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
@@ -226,6 +261,72 @@ export const ContactSection: React.FC = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Success Popup Modal */}
+      <AnimatePresence>
+        {showModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-md rounded-2xl bg-[#13182C] border border-[#1E2540] p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.8)] text-center overflow-hidden"
+            >
+              {/* Background ambient glow */}
+              <div className="absolute -top-24 -left-24 w-48 h-48 bg-pink-500/20 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+
+              {/* Close Button */}
+              <button
+                onClick={() => setShowModal(false)}
+                className="absolute top-4 right-4 p-2 rounded-xl text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              {/* Celebration Icon */}
+              <div className="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 p-0.5 shadow-[0_0_30px_rgba(16,185,129,0.4)] flex items-center justify-center mb-5">
+                <div className="w-full h-full bg-[#13182C] rounded-[14px] flex items-center justify-center">
+                  <Check className="w-8 h-8 text-emerald-400 stroke-[3]" />
+                </div>
+              </div>
+
+              <h3 className="text-xl font-black text-white tracking-tight">
+                Message Sent Successfully!
+              </h3>
+
+              <p className="text-xs text-gray-300 mt-2 leading-relaxed">
+                Thank you, <span className="text-white font-bold">{submittedData?.name}</span>! Your message has been safely delivered and dispatched to Tushar Faruk.
+              </p>
+
+              <div className="mt-5 p-3.5 rounded-xl bg-[#0A0E1A] border border-[#1E2540] text-[11px] text-left space-y-1.5">
+                <div className="flex justify-between items-center text-gray-400">
+                  <span>Recipient:</span>
+                  <span className="text-white font-medium">Tushar Faruk (Direct)</span>
+                </div>
+                <div className="flex justify-between items-center text-gray-400">
+                  <span>Sender Email:</span>
+                  <span className="text-pink-400 font-medium">{submittedData?.email}</span>
+                </div>
+                <div className="flex justify-between items-center text-gray-400">
+                  <span>Response Time:</span>
+                  <span className="text-emerald-400 font-medium">Within 24 Hours</span>
+                </div>
+              </div>
+
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF3B81] via-[#A855F7] to-[#38BDF8] text-white text-xs font-bold shadow-glow-sm hover:shadow-glow-pink transition-all duration-200 cursor-pointer"
+                >
+                  Great, Thanks!
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
