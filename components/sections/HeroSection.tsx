@@ -5,13 +5,7 @@ import { motion, Variants } from "framer-motion";
 import { ArrowRight, Play, X, Sparkles } from "lucide-react";
 import { personalInfo } from "@/lib/data";
 import { ImageWithSkeleton } from "@/components/shared/ImageWithSkeleton";
-import {
-  GoogleLogo,
-  MicrosoftLogo,
-  AirbnbLogo,
-  SlackLogo,
-  DropboxLogo,
-} from "./ClientLogos";
+import { InfiniteLogoMarquee } from "./ClientLogos";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -228,7 +222,7 @@ export const HeroSection: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Trusted By Section with High-Fidelity SVG Logos */}
+        {/* Tools & Trusted Clients Continuous Animated Marquee */}
         <motion.div
           className="mt-16 pt-8 border-t border-[#1E2540]"
           initial={{ opacity: 0, y: 15 }}
@@ -236,26 +230,18 @@ export const HeroSection: React.FC = () => {
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.5, delay: 0.15 }}
         >
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-6">
-            Trusted by clients worldwide
-          </p>
-          <div className="flex flex-wrap items-center justify-between gap-8 opacity-75 hover:opacity-100 transition-opacity text-gray-400">
-            <div className="hover:text-white transition-colors cursor-default" title="Google">
-              <GoogleLogo />
-            </div>
-            <div className="hover:text-white transition-colors cursor-default" title="Microsoft">
-              <MicrosoftLogo />
-            </div>
-            <div className="hover:text-white transition-colors cursor-default" title="Airbnb">
-              <AirbnbLogo />
-            </div>
-            <div className="hover:text-white transition-colors cursor-default" title="Slack">
-              <SlackLogo />
-            </div>
-            <div className="hover:text-white transition-colors cursor-default" title="Dropbox">
-              <DropboxLogo />
-            </div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#64748B] flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" />
+              <span>POWERED BY INDUSTRY TOOLS &amp; TRUSTED BY GLOBAL CLIENTS</span>
+            </p>
+            <span className="text-[11px] text-gray-500 font-mono hidden sm:inline-block">
+              Figma • Illustrator • Photoshop • Webflow • Brands
+            </span>
           </div>
+
+          {/* Smooth Right to Left Infinite Marquee with Soft Edge Opacity Fade */}
+          <InfiniteLogoMarquee />
         </motion.div>
       </div>
 
