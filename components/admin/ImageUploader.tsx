@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { Upload, Link as LinkIcon, X, Loader2, Sparkles } from "lucide-react";
+import { Upload, Link as LinkIcon, X, Loader2, Sparkles, Image as ImageIcon, Check } from "lucide-react";
 
 interface ImageUploaderProps {
   value: string;
@@ -18,20 +18,20 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   onChange,
   label = "Image",
   folder = "portfolio",
-  aspectRatio = "video",
+  aspectRatio = "portrait",
   placeholder = "https://images.unsplash.com/...",
 }) => {
   const [activeTab, setActiveTab] = useState<"upload" | "url">("upload");
   const [inputUrl, setInputUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [imageLoadError, setImageLoadError] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // File Upload Handler via /api/upload
   const handleFileUpload = async (file: File) => {
     if (!file) return;
 
-    // Validate size (limit to 10MB)
     if (file.size > 10 * 1024 * 1024) {
       setUploadError("Image size exceeds 10MB limit.");
       return;
@@ -39,6 +39,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
     setIsUploading(true);
     setUploadError(null);
+    setImageLoadError(false);
 
     try {
       const formData = new FormData();
@@ -57,6 +58,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       }
 
       onChange(data.url);
+      setInputUrl(data.url);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Error uploading file";
       setUploadError(msg);
@@ -66,154 +68,169 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   };
 
   // URL Submission Handler
-  const handleUrlSubmit = async () => {
+  const handleUrlSubmit = () => {
     if (!inputUrl.trim()) return;
-
-    setIsUploading(true);
+    setImageLoadError(false);
     setUploadError(null);
-
-    try {
-      // Send URL to Cloudinary endpoint to optionally re-host & optimize
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: inputUrl.trim(), folder }),
-      });
-
-      const data = await res.json();
-      if (res.ok && data.url) {
-        onChange(data.url);
-        setInputUrl("");
-      } else {
-        // Fallback: direct URL
-        onChange(inputUrl.trim());
-        setInputUrl("");
-      }
-    } catch {
-      // Fallback: direct URL
-      onChange(inputUrl.trim());
-      setInputUrl("");
-    } finally {
-      setIsUploading(false);
-    }
+    onChange(inputUrl.trim());
   };
 
   const handleClear = () => {
     onChange("");
     setInputUrl("");
     setUploadError(null);
+    setImageLoadError(false);
   };
 
-  const getAspectClass = () => {
+  const getDimensionClass = () => {
     switch (aspectRatio) {
       case "square":
-        return "aspect-square max-w-[200px]";
+        return "w-44 h-44";
       case "portrait":
-        return "aspect-[3/4] max-w-[200px]";
-      case "auto":
-        return "min-h-[160px]";
+        return "w-44 h-56";
       case "video":
+        return "w-full max-w-sm h-48";
+      case "auto":
       default:
-        return "aspect-video max-w-md";
+        return "w-full max-w-xs h-48";
     }
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
+      {/* Label Header */}
       <div className="flex items-center justify-between">
-        <label className="block text-xs font-semibold text-gray-300">
+        <label className="block text-xs font-semibold text-gray-200">
           {label}
         </label>
         {value && (
           <span className="inline-flex items-center gap-1 text-[10px] text-pink-400 font-medium">
             <Sparkles className="w-3 h-3" />
-            <span>Cloudinary Optimized</span>
+            <span>Active Image</span>
           </span>
         )}
       </div>
 
-      {/* If Image Value Exists, Show Preview */}
-      {value ? (
-        <div className="relative group rounded-2xl overflow-hidden border border-[#202744] bg-[#0E1220] p-1.5 inline-block">
-          <div className={`relative overflow-hidden rounded-xl ${getAspectClass()}`}>
-            <Image
-              src={value}
-              alt="Preview"
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, 400px"
-              unoptimized={value.startsWith("http") && !value.includes("cloudinary")}
-            />
+      {/* Main Container */}
+      <div className="p-4 rounded-2xl border border-[#202744] bg-[#0E1220] space-y-4">
+        {/* Top Preview Section (if image value exists) */}
+        {value ? (
+          <div className="flex flex-col sm:flex-row items-start gap-4 p-3 rounded-xl bg-[#090D1A] border border-[#1E2540]">
+            {/* Image Thumbnail */}
+            <div className={`relative shrink-0 rounded-xl overflow-hidden border border-pink-500/30 bg-[#14192D] ${getDimensionClass()}`}>
+              {!imageLoadError ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={value}
+                  alt="Preview"
+                  onError={() => setImageLoadError(true)}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center p-3 text-center text-gray-400">
+                  <ImageIcon className="w-8 h-8 text-gray-500 mb-1" />
+                  <span className="text-[10px] text-rose-400">Image load failed</span>
+                </div>
+              )}
+
+              {/* Clear / Delete Button */}
+              <button
+                type="button"
+                onClick={handleClear}
+                className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/80 hover:bg-rose-600 text-white shadow-md transition-colors cursor-pointer"
+                title="Remove image"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Quick Actions & URL Inspector */}
+            <div className="flex-1 space-y-2.5 w-full">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block mb-1">
+                  Current Image URL
+                </span>
+                <div className="flex items-center gap-1.5">
+                  <input
+                    type="text"
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg bg-[#0B0F19] border border-[#202744] text-xs text-gray-200 font-mono focus:outline-none focus:border-pink-500"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploading}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pink-500/15 hover:bg-pink-500/25 border border-pink-500/30 text-pink-400 text-xs font-semibold transition-all cursor-pointer"
+                >
+                  {isUploading ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <Upload className="w-3.5 h-3.5" />
+                  )}
+                  <span>Upload Replacement</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-rose-500/20 border border-white/10 text-gray-300 hover:text-rose-400 text-xs font-semibold transition-all cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                  <span>Remove</span>
+                </button>
+              </div>
+            </div>
           </div>
+        ) : (
+          /* Empty State Dropzone & URL Input */
+          <div className="space-y-3">
+            {/* Tabs */}
+            <div className="flex items-center gap-2 border-b border-[#1E2540] pb-2">
+              <button
+                type="button"
+                onClick={() => setActiveTab("upload")}
+                className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all ${
+                  activeTab === "upload"
+                    ? "bg-pink-500/20 text-pink-400 border border-pink-500/30"
+                    : "text-gray-400 hover:text-white"
+                }`}
+              >
+                <Upload className="w-3.5 h-3.5" />
+                <span>Upload from Device</span>
+              </button>
 
-          <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-            <button
-              type="button"
-              onClick={handleClear}
-              className="p-1.5 rounded-lg bg-black/70 hover:bg-rose-600 text-white backdrop-blur-md transition-colors"
-              title="Remove image"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      ) : (
-        /* Upload or Paste URL Box */
-        <div className="p-4 rounded-2xl border border-[#202744] bg-[#111526] space-y-3">
-          {/* Tab Selector */}
-          <div className="flex items-center gap-2 border-b border-[#1E2540] pb-2.5">
-            <button
-              type="button"
-              onClick={() => setActiveTab("upload")}
-              className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === "upload"
-                  ? "bg-pink-500/20 text-pink-400 border border-pink-500/30"
-                  : "text-gray-400 hover:text-white"
-              }`}
-            >
-              <Upload className="w-3.5 h-3.5" />
-              <span>Upload File</span>
-            </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("url")}
+                className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all ${
+                  activeTab === "url"
+                    ? "bg-pink-500/20 text-pink-400 border border-pink-500/30"
+                    : "text-gray-400 hover:text-white"
+                }`}
+              >
+                <LinkIcon className="w-3.5 h-3.5" />
+                <span>Paste Web URL</span>
+              </button>
+            </div>
 
-            <button
-              type="button"
-              onClick={() => setActiveTab("url")}
-              className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === "url"
-                  ? "bg-pink-500/20 text-pink-400 border border-pink-500/30"
-                  : "text-gray-400 hover:text-white"
-              }`}
-            >
-              <LinkIcon className="w-3.5 h-3.5" />
-              <span>Paste URL</span>
-            </button>
-          </div>
-
-          {/* Upload Tab */}
-          {activeTab === "upload" && (
-            <div>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handleFileUpload(file);
-                }}
-                className="hidden"
-              />
-
+            {/* Upload Area */}
+            {activeTab === "upload" && (
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="cursor-pointer border-2 border-dashed border-[#202744] hover:border-pink-500/50 rounded-xl p-6 text-center transition-all bg-[#0B0F19]/50 hover:bg-[#0B0F19]"
+                className="cursor-pointer border-2 border-dashed border-[#202744] hover:border-pink-500/50 rounded-xl p-6 text-center transition-all bg-[#0B0F19]/60 hover:bg-[#0B0F19]"
               >
                 {isUploading ? (
                   <div className="flex flex-col items-center gap-2 text-pink-400 py-2">
                     <Loader2 className="w-6 h-6 animate-spin" />
-                    <span className="text-xs font-medium">Optimizing &amp; Uploading to Cloudinary...</span>
+                    <span className="text-xs font-medium">Compressing &amp; Uploading to Cloudinary...</span>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center gap-2 text-gray-400 py-2">
+                  <div className="flex flex-col items-center gap-2 text-gray-400 py-1">
                     <div className="w-10 h-10 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400">
                       <Upload className="w-5 h-5" />
                     </div>
@@ -221,50 +238,60 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                       Click to choose image or drag &amp; drop
                     </p>
                     <p className="text-[11px] text-gray-500">
-                      PNG, JPG, WEBP, GIF up to 10MB (Auto-compressed)
+                      Supports JPG, PNG, WEBP, GIF (Up to 10MB)
                     </p>
                   </div>
                 )}
               </div>
-            </div>
-          )}
+            )}
 
-          {/* URL Tab */}
-          {activeTab === "url" && (
-            <div className="flex items-center gap-2">
-              <input
-                type="url"
-                value={inputUrl}
-                onChange={(e) => setInputUrl(e.target.value)}
-                placeholder={placeholder}
-                className="flex-1 px-3.5 py-2.5 rounded-xl bg-[#0B0F19] border border-[#202744] text-xs text-white placeholder-gray-500 focus:outline-none focus:border-pink-500 transition-colors"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    handleUrlSubmit();
-                  }
-                }}
-              />
-              <button
-                type="button"
-                onClick={handleUrlSubmit}
-                disabled={isUploading || !inputUrl.trim()}
-                className="px-4 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-[#FF3B81] to-[#A855F7] hover:opacity-95 disabled:opacity-50 transition-all shrink-0 flex items-center gap-1.5"
-              >
-                {isUploading ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <span>Apply</span>
-                )}
-              </button>
-            </div>
-          )}
+            {/* Paste URL Area */}
+            {activeTab === "url" && (
+              <div className="flex items-center gap-2 pt-1">
+                <input
+                  type="url"
+                  value={inputUrl}
+                  onChange={(e) => setInputUrl(e.target.value)}
+                  placeholder={placeholder}
+                  className="flex-1 px-3.5 py-2.5 rounded-xl bg-[#0B0F19] border border-[#202744] text-xs text-white placeholder-gray-500 focus:outline-none focus:border-pink-500 transition-colors"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleUrlSubmit();
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={handleUrlSubmit}
+                  disabled={!inputUrl.trim()}
+                  className="px-4 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-[#FF3B81] to-[#A855F7] hover:opacity-95 disabled:opacity-50 transition-all shrink-0 flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Set Image</span>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
 
-          {uploadError && (
-            <p className="text-xs text-rose-400 font-medium">{uploadError}</p>
-          )}
-        </div>
-      )}
+        {/* Hidden File Input */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) handleFileUpload(file);
+          }}
+          className="hidden"
+        />
+
+        {/* Error Alert */}
+        {uploadError && (
+          <p className="text-xs text-rose-400 font-medium">{uploadError}</p>
+        )}
+      </div>
     </div>
   );
 };

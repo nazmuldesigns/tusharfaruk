@@ -15,6 +15,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
+import { personalInfo } from "@/lib/data";
 
 interface SiteConfigData {
   hero: {
@@ -73,7 +74,20 @@ export default function AdminContentPage() {
       const res = await fetch("/api/admin/settings");
       const data = await res.json();
       if (data.data) {
-        setFormData(data.data);
+        setFormData({
+          ...data.data,
+          hero: {
+            greeting: personalInfo.greeting,
+            name: personalInfo.name,
+            title: personalInfo.title,
+            tagline: personalInfo.tagline,
+            bio: personalInfo.bio,
+            introVideoUrl: personalInfo.introVideoUrl,
+            experienceYears: personalInfo.experienceYears,
+            ...(data.data.hero || {}),
+            heroPortrait: data.data.hero?.heroPortrait || personalInfo.heroPortrait,
+          },
+        });
       }
     } catch (err) {
       console.error("Failed to load settings:", err);
