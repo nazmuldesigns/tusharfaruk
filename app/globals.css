@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0B0F19;
+  --bg-secondary: #0F172A;
+  --bg-sidebar: #0D111E;
+  --bg-card: #13182C;
+  --bg-card-hover: #181F38;
+  --bg-input: #0A0E1A;
+
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-card: #1E2540;
+  --border-accent: rgba(168, 85, 247, 0.4);
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-accent: #EC4899;
+
+  --gradient-brand: linear-gradient(135deg, #FF3B81 0%, #A855F7 50%, #6366F1 100%);
+  --gradient-accent-pink-purple: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);
+  --gradient-accent-purple-blue: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%);
+  --gradient-accent-cyan-blue: linear-gradient(135deg, #38BDF8 0%, #6366F1 100%);
+  --gradient-metrics-strip: linear-gradient(90deg, #F43F5E 0%, #A855F7 35%, #6366F1 70%, #3B82F6 100%);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B0F19;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1E2540;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #FF3B81 0%, #A855F7 100%);
+}
+
+/* Custom Scrollbar for sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #181F38;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #A855F7;
+}
+
+/* Glassmorphism & Surface Utilities */
+.glass-panel {
+  background: rgba(19, 24, 44, 0.7);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-card {
+  background: #13182C;
+  border: 1px solid #1E2540;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: #181F38;
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 12px 35px -10px rgba(168, 85, 247, 0.3);
+  transform: translateY(-4px);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #FF3B81 0%, #A855F7 50%, #6366F1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.gradient-text-pink {
+  background: linear-gradient(135deg, #FF3B81 0%, #EC4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.gradient-btn-primary {
+  background: linear-gradient(135deg, #FF3B81 0%, #EC4899 50%, #A855F7 100%);
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gradient-btn-primary:hover {
+  background: linear-gradient(135deg, #F43F5E 0%, #D946EF 50%, #9333EA 100%);
+  box-shadow: 0 0 30px rgba(255, 59, 129, 0.55);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.glow-orb {
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+/* Animations & Shimmers */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2.2s infinite linear;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Radiant card border on hover */
+.card-hover-glow {
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover-glow:hover {
+  box-shadow: 0 10px 40px -10px rgba(255, 59, 129, 0.25), 0 0 20px -5px rgba(168, 85, 247, 0.2);
+  transform: translateY(-5px);
+}
